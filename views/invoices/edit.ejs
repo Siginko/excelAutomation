@@ -1,0 +1,104 @@
+<% layout('layouts/boilerplate') %>
+<div class="container col-lg-4 offset-lg-4">
+    <h1 class="text-center m-3">Edit Invoice</h1>
+    <form action="/invoices/<%= invoice._id %>/edit?_method=PUT" novalidate class='needs-validation' method="POST">
+        <div class="form-group">
+            <label for="supplier">Choose Supplier</label>
+            <select class="form-select" id="supplier" name="invoice[supplier.supplier_id]" required>
+                <option selected value="<%=invoice.supplier.supplier_id%>"><%=invoice.supplier.supplierId%> / <%=invoice.supplier.supplierName%> / <%=invoice.supplier.supplierGstin%></option>
+                <% for (let supplier of suppliers) { %>
+                    <% if (supplier._id.toString() === invoice.supplier.supplier_id){ %>
+                    <% } else{ %>
+                    <option value="<%=supplier._id%>"><%=supplier.id%> / <%=supplier.name%> / <%=supplier.gstin%></option>
+                    <% } %>
+                <% } %>
+              </select>
+            <label for="number">Invoice Number</label>
+            <input class="form-control mt-2" type="text" id="number" name="invoice[number]" value='<%=invoice.number%>' maxlength="20" required>
+
+            <div class="col-4 col-md-5">
+            <label for="invoiceDate" class="mt-3">Invoice Date</label>
+            <input class="form-control" type="date" id="invoiceDate" name="invoice[invoiceDate]"value='<%= dates.DateFormat(invoice.invoiceDate)%>' max="<%=today%>" required>
+            </div>
+
+            <label for="netAmount" class="mt-3" >Net Amount</label>
+            <input class="form-control" type="number" id="netAmount" name="invoice[netAmount]"value='<%=invoice.netAmount%>' step='.01' min=1 required>
+            <div class="invalid-feedback">
+                The number must be greater than 0 with no more than 2 decimal places.
+            </div>
+
+            <label for="vat">Choose VAT</label>
+            <select class="form-select" id="vat" name="invoice[vat.vat_id]" required>
+                <option selected value="<%=invoice.vat.vat_id%>"><%=invoice.vat.code1%> = <%=invoice.vat.percentage1%>% / <%=invoice.vat.code2%> = <%=invoice.vat.percentage2%>% </option>
+                <% for (let vat of vats) { %>
+                    <% if (vat._id.toString() === invoice.vat.vat_id){ %>
+                    <% } else{ %>
+                    <option value="<%=vat._id%>"><%=vat.code1%> = <%=vat.percentage1%>% / <%=vat.code2%> = <%=vat.percentage2%>%</option>
+                    <% } %>
+                <% } %>
+              </select>
+
+            <label for="hsn" class="mt-3">HSN</label>
+            <input class="form-control" type="number" id="hsn" name="invoice[hsn]"value='<%=invoice.hsn%>' required>
+
+            <label for="irn" class="mt-3">IRN</label>
+            <input class="form-control" type="text" id="irn" name="invoice[irn]"value='<%=invoice.irn%>' maxlength="15" required>
+
+            <div class="col-4 col-md-5">
+            <label for="receivedDate" class="mt-3">Invoice Received Date</label>
+            <input class="form-control" type="date" id="receivedDate" name="invoice[receivedDate]"value='<%= dates.DateFormat(invoice.receivedDate) %>' max="<%=today%>" required>
+            </div>
+
+            <div class="col-4 col-md-5">
+            <label for="dueDate" class="mt-3">Invoice Due Date</label>
+            <input class="form-control" type="date" id="dueDate" name="invoice[dueDate]"value='<%=dates.DateFormat(invoice.dueDate) %>' min="<%=dates.DateFormat(tmrrw)%>" required>
+            </div>
+
+            <label for="wht">Choose WHT</label>
+            <select class="form-select" id="wht" name="invoice[wht.wht_id]" required>
+                <option selected value="<%=invoice.wht.wht_id%>"><%=invoice.wht.code%> = <%=invoice.wht.percentage%>%</option>
+                <% for (let wht of whts) { %>
+                    <% if (wht._id.toString() === invoice.wht.wht_id){ %>
+                    <% } else{ %>
+                    <option value="<%=wht._id%>"><%=wht.code%> = <%=wht.percentage%></option>
+                    <% } %>
+                <% } %>
+              </select>
+
+            <label for="billFrom" class="mt-3">Bill From</label>
+            <select class="form-select" id="billFrom" name="invoice[billFrom.billFrom_id]" required>
+                <option selected value="<%=invoice.billFrom.billFrom_id%>"><%=invoice.billFrom.code%></option>
+                <% for (let billFrom of billFroms) { %>
+                    <% if (billFrom._id.toString() === invoice.billFrom.billFrom_id){ %>
+                        <% } else { %>
+                    <option value="<%=billFrom._id%>"><%=billFrom.code%></option>
+                    <% } %>
+                <% } %>
+              </select>
+
+            <label for="departmentCode" class="mt-3">Department Code</label>
+            <select class="form-select" id="departmentCode" name="invoice[departmentCode.departmentCode_id]" required>
+                <option selected value="<%=invoice.departmentCode.departmentCode_id%>"><%=invoice.departmentCode.code%></option>
+                <% for (let departmentCode of departmentCodes) { %>
+                    <% if (departmentCode._id.toString() === invoice.departmentCode.departmentCode_id){ %>
+                        <% } else { %>
+                    <option value="<%=departmentCode._id%>"><%=departmentCode.code%></option>
+                    <% } %>
+                <% } %>
+              </select>
+
+            <label for="description" class="mt-3">Item Description</label>
+            <input class="form-control" type="text" id="description" name="invoice[description]"value='<%=invoice.description%>' maxlength="15" required>
+
+            <div class="flex-d">
+                <div class="d-grid gap-2 mt-3" >
+                    <button class="btn btn-success">Save Invoice</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="d-grid gap-2 mt-3 mb-5">
+        <a href="/invoices" class="btn btn-warning">Go Back</a>
+    </div>
+</div>
+

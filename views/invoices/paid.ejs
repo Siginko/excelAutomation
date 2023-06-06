@@ -1,0 +1,63 @@
+<% layout('layouts/boilerplate') %>
+<h1 class="text-center m-3">Exported Invoices</h1>
+<div class="col-md-2 offset-5 mt-4">
+<%- include('../partials/flash') %>
+</div>
+<div class="col-md-10 offset-1 mt-4">
+    <form action="/invoices/paid?_method=PUT" method="POST" id="return">
+        <button class="btn btn-success" form="return" id="myButton" disabled>Return Selected Files</button>
+</div>
+
+<% if (invoices.length !== 0) { %>
+<div class="col-md-10 offset-1 mt-4 d-md-flex flex-row d-none">
+    <div class="col-md-12 mt-4">
+    <div class="row h-75 align-items-center justify-content-start">
+        <div class="col-md-1"><b>Select</b></div>
+        <div class="col-md-4 col-lg-2"><b>Supplier</b></div>
+        <div class="col-md-4 col-lg-3"><b>Invoice Nr.</b></div>
+        <div class="d-lg-flex d-none col-lg-1"><b>Amount</b></div>
+        <div class="d-lg-flex d-none col-lg-2"><b>IRN</b></div>
+        <div class="col-md-2 col-lg-1"><b>Description</b></div>
+    </div>
+    </div>
+</div>
+<% } else { %>
+
+<% }%>
+
+<div class="col-md-10 offset-1 my-2 d-flex flex-row">
+    <div class="col-md-12 mt-4">
+        <% for (let i = 0; i < invoices.length; i++) { %>
+        <div class='row mt-4 align-content-center justify-content-start'>
+            <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>Select:</b></div>
+            <div class="form-check col-md-1">
+                <input class="form-check-input" type="checkbox" value="<%=invoices[i]._id%>" id="myCheckbox" name="invoice[exportStatus]">
+                <label class="form-check-label" for="myCheckbox">
+                </label>
+            </div>   
+            <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>Supplier:</b></div>
+            <div class="col-md-4 col-lg-2"><%=invoices[i].supplier.supplierName%></div>
+            <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>Invoice Nr.:</b></div>
+            <div class="col-md-4 col-lg-3"><%=invoices[i].number %></div>
+            <div class="d-lg-flex d-none col-lg-1"><%=invoices[i].netAmount%></div>
+            <div class="d-lg-flex d-none col-lg-2 "><%=invoices[i].irn %></div>
+            <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>Formwave:</b></div>
+            <div class="col-md-2 col-lg-1 mb-5 mb-md-0"><%=invoices[i].description.slice(-6) %></div>
+        </div>
+            <% } %>
+        </form>
+    </div>
+</div>
+
+<script src="/javascripts/showButton.js"></script>
+
+        
+
+
+
+
+ 
+
+
+
+

@@ -1,0 +1,19 @@
+<% layout('layouts/boilerplate') %>
+<div class="container col-lg-4 offset-lg-4">
+    <h1 class="text-center m-3">Register</h1>
+    <%- include('../partials/flash') %>
+    <form action="/register" method="POST" novalidate class="needs-validation">
+        <div class="form-group">
+            <label for="username">Email</label>
+            <input class="form-control" type="email" id="username" name="username" required> 
+            <label class="mt-2" for="username">Password (at least 8 characters) </label>
+            <input class="form-control" type="password" id="password" name="password" minlength="8" required> 
+        </div>
+        <div class="flex-d mt-2">
+            <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-success">Register!</button>
+            </div>
+        </div>
+        
+    </form>
+</div>

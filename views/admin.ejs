@@ -1,0 +1,174 @@
+<% layout('layouts/boilerplate') %>
+
+<h1 class="text-center m-3">Admin Settings</h1>
+<div class="col-md-2 offset-5 mt-4">
+    <%- include('./partials/flash') %>
+</div>
+
+<div class="col-md-10 mt-4 offset-md-1 d-flex flex-row">
+    <div class="col-md-12 offset-1 mt-4 d-flex flex-row justify-content-start">
+        <a href="/admin/whts/new" title="Add new WHT">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+        </a>
+        <p class="ms-3">New WHT</p>
+    </div>
+</div>
+
+<div class="col-md-10 offset-1 mt-2 d-none d-md-flex flex-column">
+        <div class="row h-25 offset-md-1">
+            <div class="col-md-2"><b>WHT Code</b></div>
+            <div class="col-md-2"><b>WHT % </b></div>
+            <div class="col-md-6"><b></b></div>
+    </div>
+</div>
+<div class="col-md-10 offset-1 mt-1 d-flex flex-column">
+        <% for (let wht of whts) { %>
+            <div class="row mt-3 offset-md-1 mb-5 mb-md-0">
+                <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>WHT Code:</b></div>
+                <div class="col-6 mt-3 mt-md-0 col-md-2"><%=wht.code %></div>
+                <div class="col-3 col-md-5 d-md-none"></div>
+                <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>WHT %:</b></div>
+                <div class="col-6 mt-3 mt-md-0 col-md-2"><%=wht.percentage %></div>
+                <div class="col-3 col-md-5"></div>
+            <div class="col-md-2 d-flex flex-md-row justify-content-md-end mt-2 mt-md-0 ">
+                <a href="/admin/whts/<%=wht._id%>/edit">
+                    <button class="btn btn-warning me-2">Edit</button>
+                    </a>
+                    <form action="/admin/whts/<%=wht._id%>/delete?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+            </div>
+        </div>
+        <% } %>
+</div>
+
+
+<div class="col-md-10 mt-4 offset-md-1 d-flex flex-row">
+    <div class="col-md-12 offset-1 mt-4 d-flex flex-row justify-content-start">
+        <a href="/admin/vats/new" title="Add new VAT">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+        </a>
+        <p class="ms-3">New VAT</p>
+    </div>
+</div>
+
+<div class="col-md-10 offset-1 mt-2 d-none d-md-flex flex-column">
+        <div class="row h-25 offset-md-1">
+            <div class="col-md-2"><b>VAT 1 Code</b></div>
+            <div class="col-md-2"><b>VAT 1 % </b></div>
+            <div class="col-md-2"><b>VAT 2 Code</b></div>
+            <div class="col-md-2"><b>VAT 2 % </b></div>
+            <div class="col-md-2"><b></b></div>
+    </div>
+</div>
+<div class="col-md-10 offset-1 mt-1 d-flex flex-column">
+        <% for (let vat of vats) { %>
+
+            <div class="row mt-1 offset-md-1 mb-5 mb-md-0 mt-md-3">
+                <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>Vat 1 Code:</b></div>
+                <div class="col-6 mt-3 mt-md-0 col-md-2"><%=vat.code1 %></div>
+                <div class="col-3 col-md-5 d-md-none"></div>
+                <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>Vat 1 %:</b></div>
+                <div class="col-6 mt-3 mt-md-0 col-md-2"><%=vat.percentage1 %></div>
+                <div class="col-3 col-md-5 d-md-none"></div>
+                <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>Vat 2 Code:</b></div>
+                <div class="col-6 mt-3 mt-md-0 col-md-2"><%=vat.code2 %></div>
+                <div class="col-3 col-md-5 d-md-none"></div>
+                <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>Vat 2 %:</b></div>
+                <div class="col-6 mt-3 mt-md-0 col-md-2"><%=vat.percentage2 %></div>
+                <div class="col-3 col-md-1"></div>
+            <div class="col-md-2 d-flex flex-md-row justify-content-md-end mt-2 mt-md-0">
+                <a href="/admin/vats/<%=vat._id%>/edit">
+                    <button class="btn btn-warning me-2">Edit</button>
+                    </a>
+                    <form action="/admin/vats/<%=vat._id%>/delete?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+            </div>
+        </div>
+        <% } %>
+</div>
+
+
+<div class="col-md-10 mt-4 offset-md-1 d-flex flex-row">
+    <div class="col-md-12 offset-1 mt-4 d-flex flex-row justify-content-start">
+        <a href="/admin/departmentCodes/new" title="Add new Department Code">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+        </a>
+        <p class="ms-3">New Department Code</p>
+    </div>
+</div>
+
+<div class="col-md-10 offset-1 mt-2 d-none d-md-flex flex-column">
+        <div class="row h-25 offset-md-1">
+            <div class="col-6 mt-3 mt-md-0 col-md-2"><b>Department Code</b></div>
+            <div class="col-md-8"><b></b></div>
+    </div>
+</div>
+<div class="col-md-10 offset-1 mt-1 d-flex flex-column">
+        <% for (let departmentCode of departmentCodes) { %>
+
+            <div class="row mt-1 offset-md-1 mb-5 mb-md-0 mt-md-3">
+                <div class="col-4 mt-3 mt-md-0 col-md-2 d-md-none"><b>Depatment Code:</b></div>
+                <div class="col-6 mt-3 mt-md-0 col-md-2"><%=departmentCode.code %></div>
+                <div class="col-md-7"></div>
+            <div class="col-md-2 d-flex flex-md-row justify-content-md-end mt-2 mt-md-0">
+                <a href="/admin/departmentCodes/<%=departmentCode._id%>/edit">
+                    <button class="btn btn-warning me-2">Edit</button>
+                    </a>
+                    <form action="/admin/departmentCodes/<%=departmentCode._id%>/delete?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+            </div>
+        </div>
+        <% } %>
+</div>
+
+<div class="col-md-10 mt-4 offset-md-1 d-flex flex-row">
+    <div class="col-md-12 offset-1 mt-4 d-flex flex-row justify-content-start">
+        <a href="/admin/billFroms/new" title="Add new Bill From Code">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+        </a>
+        <p class="ms-3">New Bill From Code</p>
+    </div>
+</div>
+
+<div class="col-md-10 offset-1 mt-2 d-none d-md-flex flex-column">
+    <div class="row h-25 offset-md-1">
+            <div class="col-6 mt-3 mt-md-0 col-md-2"><b>Bill From Code</b></div>
+            <div class="col-md-8"><b></b></div>
+    </div>
+</div>
+<div class="col-md-10 offset-1 mt-1 d-flex flex-column">
+        <% for (let billFrom of billFroms) { %>
+
+            <div class="row mt-1 offset-md-1 mb-5 mb-md-0 mt-md-3">
+                <div class="col-4 mt-3 mt-md-0 col-md-2 d-md-none"><b>Bill From Code:</b></div>
+                <div class="col-6 mt-3 mt-md-0 col-md-2"><%=billFrom.code %></div>
+                <div class="col-md-7"></div>
+            <div class="col-md-2 d-flex flex-md-row justify-content-md-end mt-2 mt-md-0">
+                <a href="/admin/billFroms/<%=billFrom._id%>/edit">
+                    <button class="btn btn-warning me-2">Edit</button>
+                    </a>
+                    <form action="/admin/billFroms/<%=billFrom._id%>/delete?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+            </div>
+        </div>
+        <% } %>
+</div>
+<div class="col-md-10 mt-4 mb-5 offset-1 d-flex flex-row">
+</div>
+

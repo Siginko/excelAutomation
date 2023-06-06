@@ -1,0 +1,63 @@
+<% layout('layouts/boilerplate') %>
+<h1 class="text-center m-3">Suppliers</h1>
+<div class=" col-6 offset-3 col-md-4 offset-md-4 col-lg-2 offset-lg-5 mt-4">
+    <%- include('../partials/flash') %>
+</div>
+
+<div class="col-md-10 mt-4 offset-md-1 d-flex flex-row">
+    <div class="col-md-12 offset-1 mt-4 d-flex flex-row justify-content-start">
+        <p class="me-3">New Supplier</p>
+        <a href="/suppliers/new" title="Add new invoice">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+        </a>
+    </div>
+</div>
+
+<div class="col-md-10 offset-1 mt-2 d-none d-md-flex flex-column">
+    <div class="row h-25 offset-md-1">
+            <div class="col-6 mt-3 mt-md-0 col-md-3"><b>Name</b></div>
+            <div class="col-6 mt-3 mt-md-0 col-md-3"><b>Id</b></div>
+            <div class="col-6 mt-3 mt-md-0 col-md-3"><b>GSTIN</b></div>
+            <div class="col-md-2"></div>
+    </div>
+</div>
+<div class="col-md-10 offset-1 mt-1 d-flex flex-column">
+        <% for (let supplier of suppliers) { %>
+
+            <div class="row mt-1 offset-md-1 mb-5 mb-md-0 mt-md-3">
+                <div class="col-4 mt-3 mt-md-0 col-md-2 d-md-none"><b>Name:</b></div>
+                <div class="col-6 mt-3 mt-md-0 col-md-3"><%=supplier.name %></div>
+                <div class="col-4 mt-3 mt-md-0 col-md-2 d-md-none"><b>Id:</b></div>
+                <div class="col-6 mt-3 mt-md-0 col-md-3"><%=supplier.id %></div>
+                <div class="col-4 mt-3 mt-md-0 col-md-2 d-md-none"><b>GSTIN:</b></div>
+                <div class="col-6 mt-3 mt-md-0 col-md-3"><%=supplier.gstin %></div>
+                <div class="col-1 col-lg-0"></div>
+            <div class="col-md-2 d-flex flex-md-row justify-content-md-start justify-content-lg-start mt-2 mt-md-0">
+                <a href="/suppliers/<%=supplier._id%>/edit">
+                    <button class="btn btn-warning me-2">Edit</button>
+                </a>
+                <form action="/suppliers/<%=supplier._id%>/delete?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+        <% } %>
+</div>
+
+
+
+<script src="javascripts/showButton.js"></script>
+
+        
+
+
+
+
+ 
+
+
+
+

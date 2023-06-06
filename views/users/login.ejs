@@ -1,0 +1,21 @@
+<% layout('layouts/boilerplate') %>
+<div class="container col-lg-4 offset-lg-4">
+    <h1 class="text-center m-3">Login</h1>
+    <%- include('../partials/flash') %>
+    <form action="/login" method="POST" novalidate class="needs-validation">
+        <div class="form-group">
+            <label for="username">Email</label>
+            <input class="form-control" type="email" id="username" name="username" required> 
+            <label class="mt-2" for="username">Password</label>
+            <input class="form-control" type="password" id="password" name="password" required> 
+        </div>
+        <div class="mt-2">
+            <a href="/resetPassword">I forgot my password</a>
+        </div>
+        <div class="flex-d">
+            <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-success">Login!</button>
+            </div>
+        </div>
+    </form>
+</div>

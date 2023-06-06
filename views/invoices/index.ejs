@@ -1,0 +1,89 @@
+<% layout('layouts/boilerplate') %>
+<h1 class="text-center m-3">Export Ready Invoices</h1>
+<div class=" col-6 offset-3 col-md-4 offset-md-4 col-lg-2 offset-lg-5 mt-4">
+<%- include('../partials/flash') %>
+</div>
+
+<div class="col-md-10 offset-1 d-flex flex-column flex-md-row">
+    <div class="col-md-6 mt-4 d-flex flex-row">
+        <form action="/invoices/export?_method=PUT" method="POST" id="export">
+            <button class="btn btn-success" form="export" id="myButton" disabled>Export Selected Files</button>
+    </div>
+    <div class="col-md-6 mt-4 d-flex flex-row justify-content-start justify-content-md-end">
+        <p class="me-3">New invoice</p>
+        <a href="/invoices/new" title="Add new invoice">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+        </a>
+    </div>
+</div>
+
+<% if (invoices.length !== 0) { %>
+<div class="col-md-10 offset-1 mt-4 d-md-flex flex-row d-none">
+    <div class="col-md-11 mt-4">
+    <div class="row align-items-center justify-content-start">
+        <div class="col-md-1"><b>Select</b></div>
+        <div class="col-md-4 col-lg-2"><b>Supplier</b></div>
+        <div class="col-md-4 col-lg-3"><b>Invoice Nr.</b></div>
+        <div class="col-md-1 col-lg-2"><b>Formwave</b></div>
+        <div class="d-none d-lg-flex col-lg-3"><b>Due Date</b></div>
+    </div>
+    </div>
+</div>
+<% } else { %>
+
+<% }%>
+
+
+<div class="col-md-10 offset-1 mt-1 d-flex flex-row">
+    <div class="col-md-11 mt-2">
+        <% for (let i = 0; i < invoices.length; i++) { %>
+            <div class="row align-items-center justify-content-start mt-3 d-flex flex-row">
+            <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>Select:</b></div>
+            <div class="form-check col-md-1">
+                <input class="form-check-input" type="checkbox" value="<%=invoices[i]._id%>" id="myCheckbox" name="invoice[exportStatus]">
+                <label class="form-check-label" for="myCheckbox">
+                </label>
+            </div>   
+            <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>Supplier:</b></div>
+            <div class="col-md-4 col-lg-2"><%=invoices[i].supplier.supplierName%></div>
+            <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>Invoice Nr.:</b></div>
+            <div class="col-md-4 col-lg-3"><%=invoices[i].number %></div>
+            <div class="col-3 mt-3 mt-md-0 col-md-2 d-md-none"><b>Formwave:</b></div>
+            <div class="col-md-1 mb-2 mb-md-0 col-lg-2"><%=invoices[i].description.slice(-6) %></div>
+            <div class="d-none d-lg-flex col-lg-3"><%=dates.DateFormat(invoices[i].dueDate) %></div>
+            <div class="col-md-2 text-md-end text-start mb-5 mb-md-0 col-lg-1">
+                <a href="/invoices/<%=invoices[i]._id%>/edit" id="editInvoice">
+                    <button form="editInvoice" class="btn btn-warning me-2">Edit</button>
+                </a>
+            </div>
+        </div>
+            <% } %>
+        </form>
+    </div>  
+        <div class="col-md-1 mt-2">
+        <% for (let i = 0; i < invoices.length; i++) { %>
+            <div class="row align-content-center mt-3 d-md-flex d-none ">
+                <form action="/invoices/<%=invoices[i]._id%>/?_method=DELETE" method="POST" >
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+
+<script src="javascripts/showButton.js"></script>
+
+        
+
+
+
+
+ 
+
+
+
+
