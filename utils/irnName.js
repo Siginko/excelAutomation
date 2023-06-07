@@ -15,4 +15,4 @@ function getIrnName (irnArray) {
 }
 
 
-module.exports = {Export, getIrnName}
+module.exports = {getIrnName}
