@@ -3,10 +3,16 @@ const {IndiaDate} = require('../utils/dates')
 
 
 function Export(array, totalNet, totalVat, totalGross, dueDates, irns) {
+    async (req, res, next) => {
+    console.log('1')
+    try{
+    console.log('2')
 
     const wb = new excel.Workbook();
     const ws = wb.addWorksheet('MySheet');
     const today = new Date();
+
+    console.log('irns:', irns)
 
     const name = getIrnName(irns) + `_dueDate_${IndiaDate(dueDates[0])}`;
     let fileName="";
@@ -54,10 +60,15 @@ function Export(array, totalNet, totalVat, totalGross, dueDates, irns) {
     grossRow[12] = totalGross;
     ws.insertRow(10+1+array.length, vatRow);
     ws.insertRow(10+2+array.length, grossRow);
+    console.log('3')
+    await wb.xlsx.writeFile(fileName)
+    save();
 
-
-    wb.xlsx.writeFile(fileName)
-    };
+    }
+    catch(e){
+        console.log(e)
+    }
+}
 
 function getIrnName (irnArray) {
     let name ="";
@@ -73,6 +84,7 @@ function getIrnName (irnArray) {
     }
 
     return name
+}
 }
 
 module.exports = {Export}

@@ -1,3 +1,4 @@
+const excel = require('exceljs');
 const Invoice = require('../models/invoice')
 const middleware = require('../middleware');
 const {Export} = require('../utils/exportExcel')
@@ -141,12 +142,22 @@ module.exports.exportInvoices = async (req,res) => {
         }
     
         let totalGrossAmount = totalVatAmount + totalNetAmount;
-        Export(exportedInvoices, totalNetAmount, totalVatAmount, totalGrossAmount, dueDates, irns);
+        //Export(exportedInvoices, totalNetAmount, totalVatAmount, totalGrossAmount, dueDates, irns);
+        const wb = new excel.Workbook();
+        const ws = wb.addWorksheet('MySheet');
+        ws.getCell('F6').fill = {
+            type: 'pattern',
+            pattern:'solid',
+            fgColor: {argb:'ffcc99ff'},
+        };
+
+        await wb.xlsx.writeFile('fileName')
         req.flash('success', 'Files were successfully exported.')
         res.redirect('/invoices')
     }
     
-    catch{
+    catch(e){
+        console.log(e)
         req.flash('error', `Hups, something went wrong. Please contact admin at webdev.jusi@gmail.com`)
         res.redirect('/invoices')
     }

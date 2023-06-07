@@ -22,7 +22,7 @@ const admin = require('./routes/admin')
 const users = require('./routes/users');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
-const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/ibmautomation'
+const dbUrl = process.env.DB_URL;
 const MongoStore = require('connect-mongo')
 const secret = process.env.SECRET || 'testingsecret'
 
