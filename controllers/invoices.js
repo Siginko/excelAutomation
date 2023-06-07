@@ -1,7 +1,7 @@
 const excel = require('exceljs');
 const Invoice = require('../models/invoice')
 const middleware = require('../middleware');
-const {Export} = require('../utils/exportExcel')
+const {getIrnName} = require('../utils/irnName')
 const Supplier = require('../models/supplier');
 const Vat = require('../models/vat');
 const Wht = require('../models/wht');
@@ -9,6 +9,8 @@ const DepartmentCode = require('../models/departmentCode');
 const BillFrom = require('../models/billFrom');
 const dates = require('../utils/dates')
 const {CalculateTax} = require('../utils/calculations')
+const {IndiaDate} = require('../utils/dates')
+
 
 module.exports.index = async (req,res) => {
     const invoices = await Invoice.find({author: req.user, exportStatus: false});
@@ -142,18 +144,54 @@ module.exports.exportInvoices = async (req,res) => {
         }
     
         let totalGrossAmount = totalVatAmount + totalNetAmount;
-        //Export(exportedInvoices, totalNetAmount, totalVatAmount, totalGrossAmount, dueDates, irns);
+
         const wb = new excel.Workbook();
         const ws = wb.addWorksheet('MySheet');
+        const today = new Date();
+
+
+        const name = getIrnName(irns) + `_dueDate_${IndiaDate(dueDates[0])}`;
+        let fileName=`INR_GSI_${name}.xlsx`;
+
+        const sumArray = ['Segment_Id', 'Ctrycode', 'Compcode', 'File_Seq', 'Tot Rows', 'Total Amount', 'File date', 'Record Type']
+        const totalArray = ['CTRL', '709', '70',,exportedInvoices.length, totalNetAmount, IndiaDate(today), 'IB']
+        const detailsArray = ['Supplier Name', 'Segment ID', 'Supplier Number', 'Invoice Number', 'IRN Number', 'Invoice Type', 'Rel Inv no.', 'IRN date (yyyymmdd)', 'Payment Due Date (yyyymmdd)', 'Invoice date (yyyymmdd)', 'Invoice Currency Code', 'Invoice Amount', 'VAT1 code', 'VAT1 amt', 'VAT2 code', 'VAT2 amt', 'VAT3 code', 'VAT3 amt', 'VAT4 code', 'VAT4 amt', 'Other Tax1 Code', 'Other Tax1 Amount', 'Other Tax2 Code', 'Other Tax2 Amount', 'Other Tax3 Code', 'Other Tax3 Amount', 'Payment Method', 'Bk/Add code', 'IBM Bank ID', 'Payment Document Number', 'VAT exch rate (for inv in FC & has VAT)', 'Local Data 1', 'Local Data 2', 'Local Data 5', 'Bill-from', 'Ship-to', 'Bill-to', 'Commodity Code', 'Item Description', 'Department Code', 'Item Amount', 'APPR No.', 'IGS Project No.', 'Prod ID', 'Non-IGS Proj no.', 'HSN/SAC code', 'Brand', 'Period', 'PAB No']
+        
+        ws.insertRow(5, sumArray);
+        ws.insertRow(6, totalArray);
+        ws.insertRow(9, detailsArray);
+
         ws.getCell('F6').fill = {
             type: 'pattern',
             pattern:'solid',
             fgColor: {argb:'ffcc99ff'},
         };
 
-        await wb.xlsx.writeFile('fileName')
-        req.flash('success', 'Files were successfully exported.')
-        res.redirect('/invoices')
+        ws.getRow(9).fill = {
+            type: 'pattern',
+            pattern:'solid',
+            fgColor: {argb:'ff666699'},
+        };
+
+        ws.getRow(9).font = {
+        color: {argb: 'ffffffff'},
+        }
+
+        for (let i = 0; i<exportedInvoices.length; i++){
+            ws.insertRow(10+i,exportedInvoices[i])
+        }
+
+        const vatRow = [];
+        vatRow[11] = "Total VAT:";
+        vatRow[12] = totalVatAmount;
+        const grossRow = [];
+        grossRow[11] = "Total Gross:";
+        grossRow[12] = totalGrossAmount;
+        ws.insertRow(10+1+exportedInvoices.length, vatRow);
+        ws.insertRow(10+2+exportedInvoices.length, grossRow);
+
+        res.attachment(fileName)
+        await wb.xlsx.write(res)
     }
     
     catch(e){
