@@ -4,13 +4,13 @@
     <form action="/admin/vats" method="POST" class='needs-validation' novalidate>
         <div class="form-group">
             <label for="code1">VAT Code1</label>
-            <input class="form-control" type="text" id="code1" name="vat[code1]" required>
+            <input class="form-control" type="text" id="code1" name="vat[code1]" minlength="2" maxlength="2" required>
             <label for="percentage1" class="mt-3">VAT1 Percentage</label>
-            <input class="form-control" type="number" id="percentage1" name="vat[percentage1]" required>
+            <input class="form-control" type="number" id="percentage1" max=100 name="vat[percentage1]" required>
             <label for="code2" class="mt-3">VAT Code2</label>
-            <input class="form-control" type="text" id="code2" name="vat[code2]">
+            <input class="form-control" type="text" length="2" id="code2" minlength="2" maxlength="2" maxlength=2 name="vat[code2]">
             <label for="percentage2" class="mt-3">VAT2 Percentage</label>
-            <input class="form-control" type="number" id="percentage2" name="vat[percentage2]">
+            <input class="form-control" type="number" id="percentage2" max=100 name="vat[percentage2]">
             <div class="d-grid gap-2 mt-3">
                 <button class="btn btn-success">Submit</button>
             </div>

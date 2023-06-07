@@ -4,7 +4,7 @@
     <form action="/admin/departmentCodes/<%= departmentCode._id %>/edit?_method=PUT" novalidate class='needs-validation' method="POST">
         <div class="form-group">
             <label for="description" class="mt-3">Edit Department Code</label>
-            <input class="form-control" type="text" id="description" name="departmentCode[code]" value='<%=departmentCode.code%>' required>
+            <input class="form-control" type="text" id="description" name="departmentCode[code]" value='<%=departmentCode.code%>' minlength="3" maxlength="3" required>
             <div class="flex-d">
                 <div class="d-grid gap-2 mt-3">
                     <button class="btn btn-success">Save Department Code</button>

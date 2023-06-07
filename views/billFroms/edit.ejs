@@ -4,7 +4,7 @@
     <form action="/admin/billFroms/<%= billFrom._id %>/edit?_method=PUT" novalidate class='needs-validation' method="POST">
         <div class="form-group">
             <label for="description" class="mt-3">Edit Bill From Code</label>
-            <input class="form-control" type="text" id="description" name="billFrom[code]" value='<%=billFrom.code%>' required>
+            <input class="form-control" type="text" id="description" name="billFrom[code]" value='<%=billFrom.code%>' minlength="2" maxlength="2" required>
             <div class="flex-d">
                 <div class="d-grid gap-2 mt-3">
                     <button class="btn btn-success">Save Bill From Code</button>

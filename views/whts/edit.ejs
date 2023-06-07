@@ -4,9 +4,9 @@
     <form action="/admin/whts/<%=wht._id%>/edit?_method=PUT" method="POST" class='needs-validation' novalidate>
         <div class="form-group">
             <label for="code">WHT Code</label>
-            <input class="form-control" type="text" id="code" name="wht[code]" value="<%=wht.code%>" required>
+            <input class="form-control" type="text" id="code" name="wht[code]" value="<%=wht.code%>" minlength="2" maxlength="2" required>
             <label for="percentage1" class="mt-3">WHT Percentage</label>
-            <input class="form-control" type="number" id="percentage1" name="wht[percentage]" value="<%=wht.percentage%>"required>
+            <input class="form-control" type="number" id="percentage1" name="wht[percentage]" value="<%=wht.percentage%>" max=100 required>
             <div class="d-grid gap-2 mt-3">
                 <button class="btn btn-success">Submit</button>
             </div>

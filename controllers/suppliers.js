@@ -1,7 +1,7 @@
 const Supplier = require('../models/supplier')
 
 module.exports.index = async (req,res) => {
-    const suppliers = await Supplier.find({});
+    const suppliers = await Supplier.find({author: req.user});
     res.render('suppliers/index', {suppliers});
 }
 
