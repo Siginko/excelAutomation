@@ -129,8 +129,8 @@ module.exports.exportInvoices = async (req,res) => {
                 invoice.vat.code2, CalculateTax(invoice.vat.code2, invoice.netAmount, invoice.vat.percentage2), 
                 "", "", "", "", 
                 invoice.wht.code, CalculateTax(invoice.wht.code, invoice.netAmount, invoice.wht.percentage), 
-                "", "", "", "", "", "01", "BC", "", "", "", "", "", invoice.billFrom.code, "KA", "KA", "Z40",
-                invoice.description, invoice.departmentCode.code, (invoice.netAmount).toFixed(2), "", "", "BPSW", 0, invoice.hsn, 
+                "", "", "", "", "", "01", "BC", "", "", "", "", invoice.supplier.supplierGstin, invoice.billFrom.code, "KA", "KA", "Z40",
+                invoice.description, invoice.departmentCode.code, (invoice.netAmount).toFixed(2), "", "", "BPSW", invoice.description, invoice.hsn, 
                 "Software", "", "NA"
             ];
     
@@ -227,7 +227,7 @@ module.exports.showNewForm = async (req,res) => {
 }
 
 module.exports.showPaidInvoices = async (req, res) => {
-    const invoices = await Invoice.find({exportStatus: true, author: req.user})
+    const invoices = await Invoice.find({author: req.user, exportStatus: true})
     res.render('invoices/paid', {dates, invoices})
 }
 

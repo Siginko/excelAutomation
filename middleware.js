@@ -177,12 +177,12 @@ isExportAuthor = catchAsync(async(req, res, next) => {
         }
     }
 
-    if (isAuthorSame === false){
+    if (isAuthorSame === false && req.user.role !== 'admin'){
         req.flash('error', 'Not all invoices have the same author.');
         return res.redirect(`/invoices`);
     }
 
-    if(!authors[0].equals(req.user._id)){
+    if(!authors[0].equals(req.user._id) && req.user.role !== 'admin'){
         req.flash('error', 'You do not have a permission to do that as you are not the owner of the exported invoices.');
         return res.redirect(`/invoices`);
     }
